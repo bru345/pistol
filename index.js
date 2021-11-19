@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import metaversefile from 'metaversefile';
-import { Vector3 } from 'three';
+import { Quaternion, Vector3 } from 'three';
+import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry'
 const {useApp, useFrame, useActivate, useWear, useUse, useLocalPlayer, usePhysics, useScene, getNextInstanceId, getAppByPhysicsId, useWorld, useDefaultModules, useCleanup} = metaversefile;
 
 const baseUrl = import.meta.url.replace(/(\/)[^\/\\]*$/, '$1');
@@ -163,23 +164,28 @@ export default () => {
         {
           const result = physics.raycast(gunApp.position, gunApp.quaternion.clone().multiply(z180Quaternion));
           if (result) {
+
+            const object = world.appManager.getAppByPhysicsId(result.objectId);
+            console.log(object)
             // PUT DECAL CODE HERE
             const normal = new THREE.Vector3().fromArray(result.normal);
             const planeGeo = new THREE.PlaneGeometry(0.5, 0.5, 4, 4)
+            const newPointVec = new THREE.Vector3().fromArray(result.point);
+            const quatern = new Quaternion();
+            quatern.setFromRotationMatrix( new THREE.Matrix4().lookAt(
+              newPointVec,
+              newPointVec.clone().sub(normal),
+              upVector
+            ));
 
+
+            const decalGeometry = new DecalGeometry(object.mesh, result.point, quatern, new Vector3(1,1,1));
             const textureLoader = new THREE.TextureLoader();
             textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}bulletHole.jpg`, (tex) => {
               const material = new THREE.MeshPhysicalMaterial({map:tex, alphaMap: tex, transparent: true, depthWrite: false});
-              const plane = new THREE.Mesh( planeGeo, material);
-              const newPointVec = new THREE.Vector3().fromArray(result.point);
+              const plane = new THREE.Mesh( decalGeometry, material);
               const modiPoint = newPointVec.add(new Vector3(0, (normal.y / 20 ),0));
               plane.position.copy(modiPoint);
-              plane.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
-                plane.position,
-                plane.position.clone().sub(normal),
-                upVector
-              ));
-
               scene.add(plane);
               console.log(scene, "v0")
               console.log(result)
