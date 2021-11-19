@@ -182,6 +182,7 @@ export default () => {
 
               scene.add(plane);
               console.log(scene, "v0")
+              console.log(result)
               plane.updateMatrix();
 
             });
