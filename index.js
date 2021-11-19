@@ -19,7 +19,7 @@ const fnEmptyArray = () => emptyArray;
 export default () => {
   const app = useApp();
   app.name = 'pistol';
-
+  
   const physics = usePhysics();
   const scene = useScene();
   
@@ -165,7 +165,7 @@ export default () => {
           const result = physics.raycast(gunApp.position, gunApp.quaternion.clone().multiply(z180Quaternion));
           if (result) {
 
-            const object = world.getApps();
+            const object = getAppByPhysicsId(result.objectId)
             console.log(object)
             // PUT DECAL CODE HERE
             const normal = new THREE.Vector3().fromArray(result.normal);
