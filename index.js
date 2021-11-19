@@ -185,7 +185,7 @@ export default () => {
               const material = new THREE.MeshPhysicalMaterial({map:tex, alphaMap: tex, transparent: true, depthWrite: false});
               const plane = new THREE.Mesh( decalGeometry, material);
               const modiPoint = newPointVec.add(new Vector3(0, (normal.y / 20 ),0));
-              plane.position.copy(modiPoint);
+             // plane.position.copy(modiPoint);
               scene.add(plane);
               console.log(scene, "v0")
               console.log(result)
