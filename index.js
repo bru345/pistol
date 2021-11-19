@@ -54,6 +54,10 @@ export default () => {
   let gunApp = null;
   let explosionApp = null;
   let subApps = [null, null];
+  const cubeGeo = new THREE.BoxGeometry( 1, 1, 1 );
+  const cubeMat = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+  let cube = new THREE.Mesh( cubeGeo, cubeMat );
+  scene.add( cube );
   (async () => {
     {
       let u2 = `https://webaverse.github.io/pixelsplosion/`;
@@ -178,10 +182,7 @@ export default () => {
               upVector
             ));
 
-            const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-            const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-            const cube = new THREE.Mesh( geometry, material );
-            scene.add( cube );
+            
             const euler = new Euler();
             const decalGeometry = new DecalGeometry(cube, result.point, euler.setFromQuaternion(quatern), new Vector3(1,1,1));
             const textureLoader = new THREE.TextureLoader();
