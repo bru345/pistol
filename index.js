@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import metaversefile from 'metaversefile';
-import { Quaternion, Vector3 } from 'three';
+import { Euler, Quaternion, Vector3 } from 'three';
 import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry'
 const {useApp, useFrame, useActivate, useWear, useUse, useLocalPlayer, usePhysics, useScene, getNextInstanceId, getAppByPhysicsId, useWorld, useDefaultModules, useCleanup} = metaversefile;
 
@@ -178,8 +178,8 @@ export default () => {
               upVector
             ));
 
-
-            const decalGeometry = new DecalGeometry(object.mesh, result.point, quatern, new Vector3(1,1,1));
+            const euler = new Euler();
+            const decalGeometry = new DecalGeometry(object.children[0].mesh, result.point, euler.setFromQuaternion(quatern), new Vector3(1,1,1));
             const textureLoader = new THREE.TextureLoader();
             textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}bulletHole.jpg`, (tex) => {
               const material = new THREE.MeshPhysicalMaterial({map:tex, alphaMap: tex, transparent: true, depthWrite: false});
