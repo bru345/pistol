@@ -178,8 +178,12 @@ export default () => {
               upVector
             ));
 
+            const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+            const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+            const cube = new THREE.Mesh( geometry, material );
+            scene.add( cube );
             const euler = new Euler();
-            const decalGeometry = new DecalGeometry(object.physicsObjects[0].children[0], new Vector3(1,1,1), euler, new Vector3(1,1,1));
+            const decalGeometry = new DecalGeometry(cube, result.point, euler.setFromQuaternion(quatern), new Vector3(1,1,1));
             const textureLoader = new THREE.TextureLoader();
             textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}bulletHole.jpg`, (tex) => {
               const material = new THREE.MeshPhysicalMaterial({map:tex, alphaMap: tex, transparent: true, depthWrite: false});
