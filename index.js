@@ -57,6 +57,7 @@ export default () => {
   const cubeGeo = new THREE.BoxGeometry( 1, 1, 1 );
   const cubeMat = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
   let cube = new THREE.Mesh( cubeGeo, cubeMat );
+  physics.addGeometry(cube);
   scene.add( cube );
   (async () => {
     {
@@ -169,8 +170,8 @@ export default () => {
           const result = physics.raycast(gunApp.position, gunApp.quaternion.clone().multiply(z180Quaternion));
           if (result) {
 
+            console.log(result)
             const object = getAppByPhysicsId(result.objectId)
-            console.log(object)
             // PUT DECAL CODE HERE
             const normal = new THREE.Vector3().fromArray(result.normal);
             const planeGeo = new THREE.PlaneGeometry(0.5, 0.5, 4, 4)
@@ -181,7 +182,6 @@ export default () => {
               newPointVec.clone().sub(normal),
               upVector
             ));
-
             
             const euler = new Euler();
             const decalGeometry = new DecalGeometry(cube, result.point, euler.setFromQuaternion(quatern), new Vector3(1,1,1));
