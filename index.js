@@ -60,6 +60,7 @@ export default () => {
   cube.name = "TestCube"
   scene.add( cube );
   physics.addGeometry(cube);
+  app.add(cube);
   (async () => {
     {
       let u2 = `https://webaverse.github.io/pixelsplosion/`;
@@ -101,6 +102,7 @@ export default () => {
       gunApp.updateMatrixWorld();
       gunApp.name = 'gun';
       gunApp.getPhysicsObjectsOriginal = gunApp.getPhysicsObjects;
+      console.log(gunApp.getPhysicsObjectsOriginal);
       gunApp.getPhysicsObjects = fnEmptyArray;
       subApps[1] = gunApp;
       
