@@ -57,7 +57,6 @@ export default () => {
   const cubeGeo = new THREE.BoxGeometry( 1, 1, 1 );
   const cubeMat = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
   let cube = new THREE.Mesh( cubeGeo, cubeMat );
-  physics.raycast.Scopes[0].
   scene.add( cube );
   physics.addGeometry(cube);
   app.add(cube)
