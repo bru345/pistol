@@ -54,15 +54,6 @@ export default () => {
   let gunApp = null;
   let explosionApp = null;
   let subApps = [null, null];
-  const cubeGeo = new THREE.BoxGeometry( 1, 1, 1 );
-  const cubeMat = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-  let cube = new THREE.Mesh( cubeGeo, cubeMat );
-  cube.name = "TestCube"
-  scene.add( cube );
-  {
-    let physicsID = physics.addGeometry(cube);
-    console.log(physicsID)
-  }
   (async () => {
     {
       let u2 = `https://webaverse.github.io/pixelsplosion/`;
@@ -82,6 +73,7 @@ export default () => {
       explosionApp.updateMatrixWorld();
       explosionApp.name = 'explosion';
       subApps[0] = explosionApp;
+
       await explosionApp.addModule(m);
       scene.add(explosionApp);
       // metaversefile.addApp(explosionApp);
@@ -173,8 +165,8 @@ export default () => {
           const result = physics.raycast(gunApp.position, gunApp.quaternion.clone().multiply(z180Quaternion));
           if (result) {
 
-            console.log(result)
             const object = getAppByPhysicsId(result.objectId)
+            console.log(object)
             // PUT DECAL CODE HERE
             const normal = new THREE.Vector3().fromArray(result.normal);
             const planeGeo = new THREE.PlaneGeometry(0.5, 0.5, 4, 4)
@@ -185,9 +177,9 @@ export default () => {
               newPointVec.clone().sub(normal),
               upVector
             ));
-            
+
             const euler = new Euler();
-            const decalGeometry = new DecalGeometry(cube, result.point, euler.setFromQuaternion(quatern), new Vector3(1,1,1));
+            const decalGeometry = new DecalGeometry(object.physicsObjects[0].children[0], new Vector3(1,1,1), euler.setFromQuaternion(), new Vector3(1,1,1));
             const textureLoader = new THREE.TextureLoader();
             textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}bulletHole.jpg`, (tex) => {
               const material = new THREE.MeshPhysicalMaterial({map:tex, alphaMap: tex, transparent: true, depthWrite: false});
