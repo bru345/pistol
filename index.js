@@ -178,13 +178,14 @@ export default () => {
               upVector
             ));
 
+            const modiPoint = newPointVec.add(new Vector3(0, (normal.y / 20 ),0));
+
             const euler = new Euler();
-            const decalGeometry = new DecalGeometry(object.physicsObjects[0].children[0], newPointVec, euler.setFromQuaternion(quatern), new Vector3(1,1,1));
+            const decalGeometry = new DecalGeometry(object.physicsObjects[0].children[0], modiPoint, euler.setFromQuaternion(quatern), new Vector3(1,1,1));
             const textureLoader = new THREE.TextureLoader();
             textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}bulletHole.jpg`, (tex) => {
               const material = new THREE.MeshPhysicalMaterial({map:tex, alphaMap: tex, transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: 9999});
               const plane = new THREE.Mesh( decalGeometry, material);
-              const modiPoint = newPointVec.add(new Vector3(0, (normal.y / 20 ),0));
              // plane.position.copy(modiPoint);
               scene.add(plane);
               console.log(scene, "v0")
