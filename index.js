@@ -179,7 +179,7 @@ export default () => {
             ));
 
             const euler = new Euler();
-            const decalGeometry = new DecalGeometry(object.physicsObjects[0].children[0], new Vector3(result.point[0], result.point[1], result[2]), euler.setFromQuaternion(quatern), new Vector3(1,1,1));
+            const decalGeometry = new DecalGeometry(object.physicsObjects[0].children[0], new Vector3(result.point[0], result.point[1], result[2]), euler.setFromQuaternion(quatern), new Vector3(10,10,10));
             const textureLoader = new THREE.TextureLoader();
             textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}bulletHole.jpg`, (tex) => {
               const material = new THREE.MeshPhysicalMaterial({map:tex, alphaMap: tex, transparent: true, depthWrite: false});
