@@ -182,7 +182,7 @@ export default () => {
             const decalGeometry = new DecalGeometry(object.physicsObjects[0].children[0], newPointVec, euler.setFromQuaternion(quatern), new Vector3(1,1,1));
             const textureLoader = new THREE.TextureLoader();
             textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}bulletHole.jpg`, (tex) => {
-              const material = new THREE.MeshPhysicalMaterial({map:tex, alphaMap: tex, transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4});
+              const material = new THREE.MeshPhysicalMaterial({map:tex, alphaMap: tex, transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -10});
               const plane = new THREE.Mesh( decalGeometry, material);
               const modiPoint = newPointVec.add(new Vector3(0, (normal.y / 20 ),0));
              // plane.position.copy(modiPoint);
