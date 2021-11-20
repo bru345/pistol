@@ -60,7 +60,6 @@ export default () => {
   cube.name = "TestCube"
   scene.add( cube );
   physics.addGeometry(cube);
-  app.add(cube);
   (async () => {
     {
       let u2 = `https://webaverse.github.io/pixelsplosion/`;
