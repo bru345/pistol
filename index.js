@@ -102,7 +102,6 @@ export default () => {
       gunApp.updateMatrixWorld();
       gunApp.name = 'gun';
       gunApp.getPhysicsObjectsOriginal = gunApp.getPhysicsObjects;
-      console.log(gunApp.getPhysicsObjectsOriginal);
       gunApp.getPhysicsObjects = fnEmptyArray;
       subApps[1] = gunApp;
       
