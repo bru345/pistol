@@ -59,7 +59,10 @@ export default () => {
   let cube = new THREE.Mesh( cubeGeo, cubeMat );
   cube.name = "TestCube"
   scene.add( cube );
-  let physicsID = physics.addGeometry(cube);
+  {
+    let physicsID = physics.addGeometry(cube);
+    console.log(physicsID)
+  }
   (async () => {
     {
       let u2 = `https://webaverse.github.io/pixelsplosion/`;
@@ -79,7 +82,6 @@ export default () => {
       explosionApp.updateMatrixWorld();
       explosionApp.name = 'explosion';
       subApps[0] = explosionApp;
-      console.log(physicsID)
       await explosionApp.addModule(m);
       scene.add(explosionApp);
       // metaversefile.addApp(explosionApp);
