@@ -149,7 +149,7 @@ export default () => {
       scene.add(gunApp);
       // metaversefile.addApp(gunApp);
       
-      gunApp.addEventListener('use', e => {
+      gunApp.addEventListener('use', async (e) => {
         // muzzle flash
         {
           explosionApp.position.copy(gunApp.position)
@@ -175,21 +175,27 @@ export default () => {
           const result = physics.raycast(gunApp.position, gunApp.quaternion.clone().multiply(z180Quaternion));
           if (result) {
             // Decal creation
-            const normal = new THREE.Vector3().fromArray(result.normal);
-            const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
-            let plane = new THREE.Mesh( planeGeo, decalMaterial);
-            plane.name = "DecalPlane"
-            const newPointVec = new THREE.Vector3().fromArray(result.point);
-            const modiPoint = newPointVec.add(new Vector3(0, normal.y /20 ,0));
-            plane.position.copy(modiPoint);
-            plane.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
-              plane.position,
-              plane.position.clone().sub(normal),
-              upVector
-            ));
 
-            scene.add(plane);
-            plane.updateMatrix();
+           await new Promise(async (resolve, reject) => {
+              const normal = new THREE.Vector3().fromArray(result.normal);
+              const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
+              let plane = new THREE.Mesh( planeGeo, decalMaterial);
+              plane.name = "DecalPlane"
+              const newPointVec = new THREE.Vector3().fromArray(result.point);
+              const modiPoint = newPointVec.add(new Vector3(0, normal.y /20 ,0));
+              plane.position.copy(modiPoint);
+              plane.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
+                plane.position,
+                plane.position.clone().sub(normal),
+                upVector
+              ));
+  
+             await scene.add(plane);
+              plane.updateMatrix();
+              resolve();
+            }).then(() => {
+
+                         
 
             let positions = planeGeo.attributes.position.array;
             let ptCout = positions.length;
@@ -241,6 +247,9 @@ export default () => {
             planeGeo.attributes.position.needsUpdate = true;
             planeGeo.computeVertexNormals();
             plane.updateMatrixWorld();
+
+            })
+
             explosionApp.position.fromArray(result.point);
             explosionApp.quaternion.setFromRotationMatrix(
               new THREE.Matrix4().lookAt(
