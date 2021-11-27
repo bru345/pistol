@@ -210,6 +210,7 @@ export default () => {
                   let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                   const pToWorld = plane.localToWorld(p);
                   const vertexRaycast = physics.raycast(pToWorld, plane.quaternion.clone());
+                  console.log("Shooting vertex rays", plane)
 
                   if(vertexRaycast) {
                     console.log("Hello world2", plane)
@@ -220,6 +221,8 @@ export default () => {
                       const debugCube = new THREE.Mesh(debugGeo, debugMat);
                       debugMesh.push(debugCube);
                       scene.add( debugCube );
+                      console.log("creating debug cube meshes", plane)
+
                     }
                     const dummyPosition = new THREE.Object3D();
                     scene.add( dummyPosition );
