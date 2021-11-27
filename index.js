@@ -178,7 +178,7 @@ export default () => {
 
            await new Promise(async (resolve, reject) => {
               const normal = new THREE.Vector3().fromArray(result.normal);
-              const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
+              let planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
               let plane = new THREE.Mesh( planeGeo, decalMaterial);
               plane.name = "DecalPlane"
               const newPointVec = new THREE.Vector3().fromArray(result.point);
