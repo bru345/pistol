@@ -202,7 +202,7 @@ export default () => {
 
             for (let i = 0; i < ptCout; i++)
               {
-                console.log("Hello world", plane)
+                console.log("Hello world2", plane)
 
                   let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                   const pToWorld = plane.localToWorld(p);
