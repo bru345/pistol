@@ -177,22 +177,24 @@ export default () => {
             // Decal creation
             const normal = new THREE.Vector3().fromArray(result.normal);
             const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
-           await new Promise(async (resolve, reject) => {
-              let plane = new THREE.Mesh( planeGeo, decalMaterial);
-              plane.name = "DecalPlane"
-              const newPointVec = new THREE.Vector3().fromArray(result.point);
-              const modiPoint = newPointVec.add(new Vector3(0, normal.y /20 ,0));
-              plane.position.copy(modiPoint);
-              plane.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
-                plane.position,
-                plane.position.clone().sub(normal),
-                upVector
-              ));
-  
-             await scene.add(plane);
-              plane.updateMatrix();
-              resolve();
-            }).then(() => {
+            let plane = new THREE.Mesh( planeGeo, decalMaterial);
+            plane.name = "DecalPlane"
+            
+            await new Promise(async (resolve, reject) => {
+         
+            const newPointVec = new THREE.Vector3().fromArray(result.point);
+            const modiPoint = newPointVec.add(new Vector3(0, normal.y /20 ,0));
+            plane.position.copy(modiPoint);
+            plane.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
+              plane.position,
+              plane.position.clone().sub(normal),
+              upVector
+            ));
+
+            await scene.add(plane);
+            plane.updateMatrix();
+            resolve();
+          }).then(() => {
 
                          
 
