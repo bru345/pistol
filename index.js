@@ -192,6 +192,8 @@ export default () => {
             ));
 
             await scene.add(plane);
+            console.log("Hello world1", plane)
+
             plane.updateMatrix();
             resolve();
           }).then((resolve) => {
@@ -203,14 +205,14 @@ export default () => {
 
             for (let i = 0; i < ptCout; i++)
               {
-                console.log("Hello world", plane)
+       
 
                   let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                   const pToWorld = plane.localToWorld(p);
                   const vertexRaycast = physics.raycast(pToWorld, plane.quaternion.clone());
 
                   if(vertexRaycast) {
-
+                    console.log("Hello world2", plane)
                     const vertextHitnormal = new THREE.Vector3().fromArray(vertexRaycast.normal);
                     if (debugMesh.length < ptCout && debugDecalVertPos) {
                       const debugGeo = new THREE.BoxGeometry( 0.01, 0.01, 0.01);
