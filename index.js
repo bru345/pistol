@@ -241,7 +241,6 @@ export default () => {
                     const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                     clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
                     planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
-                    resolve();
                   }
 
               }
