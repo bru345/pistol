@@ -175,10 +175,9 @@ export default () => {
           const result = physics.raycast(gunApp.position, gunApp.quaternion.clone().multiply(z180Quaternion));
           if (result) {
             // Decal creation
-
+            const normal = new THREE.Vector3().fromArray(result.normal);
+            const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
            await new Promise(async (resolve, reject) => {
-              const normal = new THREE.Vector3().fromArray(result.normal);
-              let planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
               let plane = new THREE.Mesh( planeGeo, decalMaterial);
               plane.name = "DecalPlane"
               const newPointVec = new THREE.Vector3().fromArray(result.point);
@@ -202,7 +201,7 @@ export default () => {
 
             for (let i = 0; i < ptCout; i++)
               {
-                console.log("Hello world2", plane)
+                console.log("Hello world", plane)
 
                   let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                   const pToWorld = plane.localToWorld(p);
