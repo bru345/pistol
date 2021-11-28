@@ -202,6 +202,7 @@ export default () => {
 
             let positions = planeGeo.attributes.position.array;
             let ptCout = positions.length;
+            setTimeout(() => {
 
             for (let i = 0; i < ptCout; i++)
               {
@@ -235,7 +236,6 @@ export default () => {
                       const pointVec =  dummyPosition.localToWorld(new THREE.Vector3().fromArray(convertedVal).add(
                         new Vector3(0, vertextHitnormal.y / offSet,0 )
                       ));
-                      setTimeout(() => {
 
                       if (debugDecalVertPos) {
                         debugMesh[i].position.set(pointVec.x, pointVec.y, pointVec.z);
@@ -251,7 +251,6 @@ export default () => {
                       const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                       clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
                       planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
-                    }, 300);
 
                     }
                     
@@ -263,6 +262,7 @@ export default () => {
             plane.updateMatrixWorld();
 
             })
+          }, 300);
 
             explosionApp.position.fromArray(result.point);
             explosionApp.quaternion.setFromRotationMatrix(
