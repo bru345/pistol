@@ -202,7 +202,6 @@ export default () => {
 
             let positions = planeGeo.attributes.position.array;
             let ptCout = positions.length;
-            setTimeout(()=> {
 
             for (let i = 0; i < ptCout; i++)
               {
@@ -212,6 +211,7 @@ export default () => {
                   const pToWorld = plane.localToWorld(p);
                   const vertexRaycast = physics.raycast(pToWorld, plane.quaternion.clone());
                   console.log("Shooting vertex rays", plane)
+                  setTimeout(()=> {
 
                   if(vertexRaycast) {
                     console.log("Hello world2", plane)
