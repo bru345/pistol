@@ -233,9 +233,7 @@ export default () => {
                     ));
                     
                     setTimeout(()=> {
-
-                    }, 300)
-                    if (debugDecalVertPos) {
+                      if (debugDecalVertPos) {
                         debugMesh[i].position.set(pointVec.x, pointVec.y, pointVec.z);
                         debugMesh[i].updateWorldMatrix();
                         dummyPosition.position.set(pointVec.x, pointVec.y, pointVec.z);
@@ -247,6 +245,9 @@ export default () => {
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
                         planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                     }
+
+                    }, 300)
+                  
                   }
               }
 
