@@ -227,7 +227,6 @@ export default () => {
   
                       }
 
-                      setTimeout(() => {
 
                       const dummyPosition = new THREE.Object3D();
                       scene.add( dummyPosition );
@@ -236,7 +235,8 @@ export default () => {
                       const pointVec =  dummyPosition.localToWorld(new THREE.Vector3().fromArray(convertedVal).add(
                         new Vector3(0, vertextHitnormal.y / offSet,0 )
                       ));
-  
+                      setTimeout(() => {
+
                       if (debugDecalVertPos) {
                         debugMesh[i].position.set(pointVec.x, pointVec.y, pointVec.z);
                         debugMesh[i].updateWorldMatrix();
