@@ -214,7 +214,6 @@ export default () => {
 
 
                     if(vertexRaycast) {
-                      setTimeout(() => {
 
                       console.log("Hello world2", plane)
                       const vertextHitnormal = new THREE.Vector3().fromArray(vertexRaycast.normal);
@@ -227,6 +226,9 @@ export default () => {
                         console.log("creating debug cube meshes", plane)
   
                       }
+
+                      setTimeout(() => {
+
                       const dummyPosition = new THREE.Object3D();
                       scene.add( dummyPosition );
                       const convertedVal = new Float32Array(vertexRaycast.point)
