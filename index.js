@@ -212,9 +212,10 @@ export default () => {
                   const vertexRaycast = physics.raycast(pToWorld, plane.quaternion.clone());
                   console.log("Shooting vertex rays", plane)
 
-                  setTimeout(() => {
 
                     if(vertexRaycast) {
+                      setTimeout(() => {
+
                       console.log("Hello world2", plane)
                       const vertextHitnormal = new THREE.Vector3().fromArray(vertexRaycast.normal);
                       if (debugMesh.length < ptCout && debugDecalVertPos) {
@@ -248,18 +249,17 @@ export default () => {
                       const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                       clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
                       planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
+                    }, 300);
 
-                      planeGeo.attributes.position.usage = THREE.DynamicDrawUsage;
-                      planeGeo.attributes.position.needsUpdate = true;
-                      planeGeo.computeVertexNormals();
-                      plane.updateMatrixWorld();
-          
                     }
                     
-                  }, 300);
               }
 
-      
+            planeGeo.attributes.position.usage = THREE.DynamicDrawUsage;
+            planeGeo.attributes.position.needsUpdate = true;
+            planeGeo.computeVertexNormals();
+            plane.updateMatrixWorld();
+
             })
 
             explosionApp.position.fromArray(result.point);
