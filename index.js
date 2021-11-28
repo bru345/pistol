@@ -231,23 +231,23 @@ export default () => {
                     const pointVec =  dummyPosition.localToWorld(new THREE.Vector3().fromArray(convertedVal).add(
                       new Vector3(0, vertextHitnormal.y / offSet,0 )
                     ));
+                    
+                    setTimeout(()=> {
 
+                    }, 300)
                     if (debugDecalVertPos) {
-                      debugMesh[i].position.set(pointVec.x, pointVec.y, pointVec.z);
-                      debugMesh[i].updateWorldMatrix();
+                        debugMesh[i].position.set(pointVec.x, pointVec.y, pointVec.z);
+                        debugMesh[i].updateWorldMatrix();
+                        dummyPosition.position.set(pointVec.x, pointVec.y, pointVec.z);
+                        dummyPosition.updateWorldMatrix();
+                        const worldToLoc = plane.worldToLocal(pointVec)
+                        const minClamp = -0.25;
+                        const maxClamp = 3;
+                        const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
+                        clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
+                        planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                     }
-
-                    dummyPosition.position.set(pointVec.x, pointVec.y, pointVec.z);
-                    dummyPosition.updateWorldMatrix();
-                    const worldToLoc = plane.worldToLocal(pointVec)
-
-                    const minClamp = -0.25;
-                    const maxClamp = 3;
-                    const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
-                    clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
-                    planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                   }
-
               }
 
             planeGeo.attributes.position.usage = THREE.DynamicDrawUsage;
