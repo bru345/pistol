@@ -262,7 +262,7 @@ export default () => {
             plane.updateMatrixWorld();
 
             })
-          }, 300);
+          }, 1000);
 
             explosionApp.position.fromArray(result.point);
             explosionApp.quaternion.setFromRotationMatrix(
