@@ -61,6 +61,12 @@ export default () => {
   decalTexture.wrapT = RepeatWrapping;
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
   decalMaterial.needsUpdate = true;
+  const megaBufferGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
+  let megaMesh = new THREE.Mesh( megaBufferGeo, decalMaterial);
+  megaMesh.name = "megaMesh";
+  scene.add(megaMesh);
+  console.log(megaMesh);
+
   const debugMesh = [];
   const debugDecalVertPos = true;
 
@@ -179,7 +185,7 @@ export default () => {
           if (result) {
             // Decal creation
             const normal = new THREE.Vector3().fromArray(result.normal);
-            const planeGeo = new THREE.PlaneBufferGeometry(300, 300, 8, 8)
+            const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
             let plane = new THREE.Mesh( planeGeo, decalMaterial);
             plane.name = "DecalPlane"
             const newPointVec = new THREE.Vector3().fromArray(result.point);
