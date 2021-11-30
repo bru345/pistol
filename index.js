@@ -200,6 +200,9 @@ export default () => {
               {
                 for (let i = 0; i < ptCout; i++)
                   {
+                    // Use / move the same plane to shoot raycast.
+                    // Then create a megaMesh, which all bufferGeometry are fed into
+
                       let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                       const pToWorld = plane.localToWorld(p);
                       const vertexRaycast = physics.raycast(pToWorld, plane.quaternion.clone());
@@ -226,6 +229,7 @@ export default () => {
                           debugMesh[i].position.set(pointVec.x, pointVec.y, pointVec.z);
                           debugMesh[i].updateWorldMatrix();
                         }
+                        
 
                         dummyPosition.position.set(pointVec.x, pointVec.y, pointVec.z);
                         dummyPosition.updateWorldMatrix();
@@ -238,6 +242,7 @@ export default () => {
                         planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
+                      planeGeo.setDrawRange(0,5);
                       planeGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                       planeGeo.attributes.position.needsUpdate = true;
                       planeGeo.computeVertexNormals();
