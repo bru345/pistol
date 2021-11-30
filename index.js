@@ -61,7 +61,7 @@ export default () => {
   decalTexture.wrapT = RepeatWrapping;
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
   decalMaterial.needsUpdate = true;
-  const megaBufferGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
+  const megaBufferGeo = new THREE.PlaneBufferGeometry(200, 200, 8, 8)
   let megaMesh = new THREE.Mesh( megaBufferGeo, decalMaterial);
   megaMesh.name = "megaMesh";
   scene.add(megaMesh);
