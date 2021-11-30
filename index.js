@@ -242,7 +242,7 @@ export default () => {
                         planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
-                      planeGeo.setDrawRange(0,5);
+                      planeGeo.setDrawRange(0,200);
                       planeGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                       planeGeo.attributes.position.needsUpdate = true;
                       planeGeo.computeVertexNormals();
