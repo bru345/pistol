@@ -179,7 +179,7 @@ export default () => {
           if (result) {
             // Decal creation
             const normal = new THREE.Vector3().fromArray(result.normal);
-            const planeGeo = new THREE.PlaneBufferGeometry(10, 10, 8, 8)
+            const planeGeo = new THREE.PlaneBufferGeometry(300, 300, 8, 8)
             let plane = new THREE.Mesh( planeGeo, decalMaterial);
             plane.name = "DecalPlane"
             const newPointVec = new THREE.Vector3().fromArray(result.point);
