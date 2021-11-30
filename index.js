@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import metaversefile from 'metaversefile';
-import { Vector3 } from 'three';
+import { RepeatWrapping, Vector3 } from 'three';
 import { clamp } from 'three/src/math/MathUtils';
 const {useApp, useFrame, useActivate, useWear, useUse, useLocalPlayer, usePhysics, useScene, getNextInstanceId, getAppByPhysicsId, useWorld, useDefaultModules, useCleanup} = metaversefile;
 
@@ -56,6 +56,8 @@ export default () => {
   const decalTextureName = "bulletHole.jpg";
   const decalTexture = textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}${ decalTextureName}`);
   decalTexture.needsUpdate = true;
+  decalTexture.wrapS = RepeatWrapping;
+  decalTexture.wrapT = RepeatWrapping;
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
   decalMaterial.needsUpdate = true;
   const debugMesh = [];
@@ -176,7 +178,7 @@ export default () => {
           if (result) {
             // Decal creation
             const normal = new THREE.Vector3().fromArray(result.normal);
-            const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
+            const planeGeo = new THREE.PlaneBufferGeometry(10, 10, 8, 8)
             let plane = new THREE.Mesh( planeGeo, decalMaterial);
             plane.name = "DecalPlane"
             const newPointVec = new THREE.Vector3().fromArray(result.point);
@@ -202,6 +204,7 @@ export default () => {
                   {
                     // Use / move the same plane to shoot raycast.
                     // Then create a megaMesh, which all bufferGeometry are fed into
+                    // megaMesh has wrap texture?
 
                       let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                       const pToWorld = plane.localToWorld(p);
@@ -242,7 +245,6 @@ export default () => {
                         planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
-                      planeGeo.setDrawRange(0,200);
                       planeGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                       planeGeo.attributes.position.needsUpdate = true;
                       planeGeo.computeVertexNormals();
