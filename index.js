@@ -149,7 +149,7 @@ export default () => {
       scene.add(gunApp);
       // metaversefile.addApp(gunApp);
       
-      gunApp.addEventListener('use', async (e) => {
+      gunApp.addEventListener('use', e => {
         // muzzle flash
         {
           explosionApp.position.copy(gunApp.position)
@@ -179,9 +179,6 @@ export default () => {
             const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
             let plane = new THREE.Mesh( planeGeo, decalMaterial);
             plane.name = "DecalPlane"
-            
-            await new Promise(async (resolve, reject) => {
-         
             const newPointVec = new THREE.Vector3().fromArray(result.point);
             const modiPoint = newPointVec.add(new Vector3(0, normal.y /20 ,0));
             plane.position.copy(modiPoint);
@@ -191,78 +188,61 @@ export default () => {
               upVector
             ));
 
-            await scene.add(plane);
-            console.log("Hello world1", plane)
-
+            scene.add(plane);
             plane.updateMatrix();
-            resolve();
-          }).then((resolve) => {
-
-                         
 
             let positions = planeGeo.attributes.position.array;
             let ptCout = positions.length;
-            setTimeout(() => {
 
-            for (let i = 0; i < ptCout; i++)
+            // Decal vertex manipulation
+            setTimeout(() => {  
+              if (planeGeo instanceof THREE.BufferGeometry)
               {
-       
-
-                  let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
-                  const pToWorld = plane.localToWorld(p);
-                  const vertexRaycast = physics.raycast(pToWorld, plane.quaternion.clone());
-                  console.log("Shooting vertex rays", plane)
-
-
-                    if(vertexRaycast) {
-
-                      console.log("Hello world2", plane)
-                      const vertextHitnormal = new THREE.Vector3().fromArray(vertexRaycast.normal);
-                      if (debugMesh.length < ptCout && debugDecalVertPos) {
-                        const debugGeo = new THREE.BoxGeometry( 0.01, 0.01, 0.01);
-                        const debugMat = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-                        const debugCube = new THREE.Mesh(debugGeo, debugMat);
-                        debugMesh.push(debugCube);
-                        scene.add( debugCube );
-                        console.log("creating debug cube meshes", plane)
+                for (let i = 0; i < ptCout; i++)
+                  {
+                      let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
+                      const pToWorld = plane.localToWorld(p);
+                      const vertexRaycast = physics.raycast(pToWorld, plane.quaternion.clone());
   
+                      if(vertexRaycast) {
+  
+                        const vertextHitnormal = new THREE.Vector3().fromArray(vertexRaycast.normal);
+                        if (debugMesh.length < ptCout && debugDecalVertPos) {
+                          const debugGeo = new THREE.BoxGeometry( 0.01, 0.01, 0.01);
+                          const debugMat = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+                          const debugCube = new THREE.Mesh(debugGeo, debugMat);
+                          debugMesh.push(debugCube);
+                          scene.add( debugCube );
+                        }
+                        const dummyPosition = new THREE.Object3D();
+                        scene.add( dummyPosition );
+                        const convertedVal = new Float32Array(vertexRaycast.point)
+                        const offSet = 14;
+                        const pointVec =  dummyPosition.localToWorld(new THREE.Vector3().fromArray(convertedVal).add(
+                          new Vector3(0, vertextHitnormal.y / offSet,0 )
+                        ));
+
+                        if (debugDecalVertPos) {
+                          debugMesh[i].position.set(pointVec.x, pointVec.y, pointVec.z);
+                          debugMesh[i].updateWorldMatrix();
+                        }
+
+                        dummyPosition.position.set(pointVec.x, pointVec.y, pointVec.z);
+                        dummyPosition.updateWorldMatrix();
+                        const worldToLoc = plane.worldToLocal(pointVec)
+
+                        const minClamp = -0.25;
+                        const maxClamp = 3;
+                        const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
+                        clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
+                        planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
-
-
-                      const dummyPosition = new THREE.Object3D();
-                      scene.add( dummyPosition );
-                      const convertedVal = new Float32Array(vertexRaycast.point)
-                      const offSet = 14;
-                      const pointVec =  dummyPosition.localToWorld(new THREE.Vector3().fromArray(convertedVal).add(
-                        new Vector3(0, vertextHitnormal.y / offSet,0 )
-                      ));
-
-                      if (debugDecalVertPos) {
-                        debugMesh[i].position.set(pointVec.x, pointVec.y, pointVec.z);
-                        debugMesh[i].updateWorldMatrix();
-                      }
-  
-                      dummyPosition.position.set(pointVec.x, pointVec.y, pointVec.z);
-                      dummyPosition.updateWorldMatrix();
-                      const worldToLoc = plane.worldToLocal(pointVec)
-  
-                      const minClamp = -0.25;
-                      const maxClamp = 3;
-                      const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
-                      clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
-                      planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
-
-                    }
-                    
-              }
-
-            planeGeo.attributes.position.usage = THREE.DynamicDrawUsage;
-            planeGeo.attributes.position.needsUpdate = true;
-            planeGeo.computeVertexNormals();
-            plane.updateMatrixWorld();
-
-            })
-          }, 1000);
+                  }
+                      planeGeo.attributes.position.usage = THREE.DynamicDrawUsage;
+                      planeGeo.attributes.position.needsUpdate = true;
+                      planeGeo.computeVertexNormals();
+                      plane.updateMatrixWorld();
+              } }, 100);
 
             explosionApp.position.fromArray(result.point);
             explosionApp.quaternion.setFromRotationMatrix(
