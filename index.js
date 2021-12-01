@@ -63,7 +63,7 @@ export default () => {
   decalMaterial.needsUpdate = true;
 
   //manipulate the correct and available vertex
-  const megaBufferGeo = new THREE.PlaneBufferGeometry(200, 200, 8, 8)
+  const megaBufferGeo = new THREE.PlaneBufferGeometry(200, 200, 1000, 1000)
   let megaMesh = new THREE.Mesh( megaBufferGeo, decalMaterial);
   megaMesh.name = "megaMesh";
   scene.add(megaMesh);
