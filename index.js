@@ -282,7 +282,7 @@ export default () => {
                       planeGeo.computeVertexNormals();
                       plane.updateMatrixWorld();
               } }, 100);
-              console.log(megaMesh);
+              console.log(megaMesh, "1");
 
             explosionApp.position.fromArray(result.point);
             explosionApp.quaternion.setFromRotationMatrix(
