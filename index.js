@@ -303,7 +303,7 @@ export default () => {
                   }
 
                     const megaGeoSize = setArray.length;
-                    megaBufferGeo.attributes.position.array = setArray.clone();
+                    megaBufferGeo.attributes.position.array = setArray;
 
                     for (let i = startIndex; i < megaGeoSize - 1; i++) {
                     
