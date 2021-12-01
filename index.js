@@ -56,14 +56,14 @@ export default () => {
   const decalTextureName = "bulletHole.jpg";
   const decalTexture = textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}${ decalTextureName}`);
   decalTexture.needsUpdate = true;
-  decalTexture.repeat.set(5,5);
+  decalTexture.repeat.set(0.5,0.5);
   decalTexture.wrapS = RepeatWrapping;
   decalTexture.wrapT = RepeatWrapping;
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
   decalMaterial.needsUpdate = true;
   //manipulate the correct and available vertex
   //CAN'T MANIPULATE megaBufferGeo??
-  const megaBufferGeo = new THREE.PlaneBufferGeometry(155,155, 25, 25)
+  const megaBufferGeo = new THREE.PlaneBufferGeometry(0.5,0.5, 8, 8)
   // megaBufferGeo.attributes.position.updateRange.offSet = 0;
   // megaBufferGeo.attributes.position.updateRange.count = 600
   megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
