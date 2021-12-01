@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import metaversefile from 'metaversefile';
-import { Matrix4, RepeatWrapping, Vector3 } from 'three';
+import { Matrix4, MeshBasicMaterial, RepeatWrapping, Vector3 } from 'three';
 import { clamp } from 'three/src/math/MathUtils';
 const {useApp, useFrame, useActivate, useWear, useUse, useLocalPlayer, usePhysics, useScene, getNextInstanceId, getAppByPhysicsId, useWorld, useDefaultModules, useCleanup} = metaversefile;
 
@@ -198,7 +198,7 @@ export default () => {
             //figure out how to apply
             const normal = new THREE.Vector3().fromArray(result.normal);
             const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
-            let plane = new THREE.Mesh( planeGeo, decalMaterial);
+            let plane = new THREE.Mesh( planeGeo, new MeshBasicMaterial());
             plane.name = "DecalPlane"
             console.log(planeGeo);
             const newPointVec = new THREE.Vector3().fromArray(result.point);
@@ -273,8 +273,7 @@ export default () => {
                         megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
-                      // megaBufferGeo.computeVertexNormals();
-                
+                      megaBufferGeo.computeVertexNormals();
                       megaMesh.updateMatrixWorld();
                       console.log(megaMesh);
               } }, 100);
