@@ -301,7 +301,7 @@ export default () => {
                         // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
-                      megaBufferGeo.attributes.position.set(setArray)
+                      megaBufferGeo.attributes.position.array = setArray;
 
                       for (let i = startIndex; i < setArray.length; i++) {
                       
