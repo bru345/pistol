@@ -284,15 +284,15 @@ export default () => {
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
 
                         //Need to add attributes before setting
-                        setArray.push(new THREE.Float32BufferAttribute(clampedPos))
+                        setArray.push(clampedPos)
                         // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
-                      megaBufferGeo.attributes.position.set(setArray)
+                   //   megaBufferGeo.attributes.position.set(setArray)
 
                       for (let i = 0; i < setArray.length; i++) {
                       
-                        megaBufferGeo.attributes.position.setXYZ( i, setArray[i].array);
+                        megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
                         
                       }
                       megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
