@@ -221,12 +221,12 @@ export default () => {
             
             //confirming if issue is positional/rotation
             //REMOVE THIS. RESOLVE MATRIX FOR GEOMETRYBUFFER ELSEWHERE
-            megaMesh.position.copy(modiPoint);
-            megaMesh.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
-              plane.position,
-              plane.position.clone().sub(normal),
-              upVector
-            ));
+            // megaMesh.position.copy(modiPoint);
+            // megaMesh.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
+            //   plane.position,
+            //   plane.position.clone().sub(normal),
+            //   upVector
+            // ));
 
             scene.add(plane);
             plane.updateMatrix();
