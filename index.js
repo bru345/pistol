@@ -289,9 +289,18 @@ export default () => {
                       }
                   }
                       megaBufferGeo.attributes.position.set(setArray)
+
+                      for (let i = 0; i < setArray.length; i++) {
+                      
+                        megaBufferGeo.attributes.position.setXYZ( i, setArray[i] );
+                        
+                      }
                       megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                       megaBufferGeo.attributes.position.needsUpdate = true;
                       megaBufferGeo.computeVertexNormals();
+
+                      
+
                       megaMesh.updateMatrixWorld();
 
                       //Can we INSTANCE mesh at this step
@@ -299,9 +308,7 @@ export default () => {
                       //TODO IGNORE INSTANCE MESHING. Continue with megamesh logic...pass buffer geometry through it,
                       //with correct matrix
                       //DONT DO INSTANCE MESH
-                      const iMesh = new InstancedMesh(megaBufferGeo, decalMaterial,1);
-                      
-                      scene.add(iMesh);
+                     
               } }, 100);
               console.log(megaMesh);
 
