@@ -284,7 +284,7 @@ export default () => {
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
 
                         //Need to add attributes before setting
-                        setArray.push(new Float32Array(clampedPos))
+                        setArray.push(new THREE.Float32BufferAttribute(clampedPos))
                         // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
