@@ -240,7 +240,7 @@ export default () => {
                 const setArray = [];
 
                 for (let i = 0; i < newSize; i++) {
-                  setArray[i] = new Vector3().fromArray(megaBufferGeo.attributes.position.array[i]);
+                  setArray[i] = new Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                 }
 
 
