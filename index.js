@@ -237,7 +237,7 @@ export default () => {
               {
                 const startIndex = megaBufferGeo.attributes.position.array.length;
                 const newSize = megaBufferGeo.attributes.position.array.length + ptCout;
-                const setArray = new Array(newSize);
+                const setArray = new Float32Array(newSize);
 
                 for (let i = 0; i < newSize; i++) {
                   setArray[i] = megaBufferGeo.attributes.position.array[i];
