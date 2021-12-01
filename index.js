@@ -235,6 +235,8 @@ export default () => {
             setTimeout(() => {  
               if (planeGeo instanceof THREE.BufferGeometry)
               {
+                const setArray = [];
+
                 for (let i = 0; i < ptCout; i++)
                   {
                     // Use / move the same plane to shoot raycast.
@@ -278,7 +280,6 @@ export default () => {
                         const maxClamp = 3;
 
                         //should the geo be in a megaarray? or do we read the megaMesh position everytime and create ontop etc..
-                        const setArray = [];
                         const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
 
