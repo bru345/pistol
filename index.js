@@ -235,6 +235,7 @@ export default () => {
                           debugMesh.push(debugCube);
                           scene.add( debugCube );
                         }
+                        megaBufferGeo.setDrawRange(0, 81)
                         const dummyPosition = new THREE.Object3D();
                         scene.add( dummyPosition );
                         const convertedVal = new Float32Array(vertexRaycast.point)
@@ -263,6 +264,7 @@ export default () => {
                       megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                       megaBufferGeo.attributes.position.needsUpdate = true;
                       megaBufferGeo.computeVertexNormals();
+                
                       megaMesh.updateMatrixWorld();
               } }, 100);
 
