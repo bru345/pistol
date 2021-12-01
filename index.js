@@ -53,13 +53,13 @@ export default () => {
 
   const textureLoader = new THREE.TextureLoader();
 
-  const decalTextureName = "bulletHole.jpg";
+  const decalTextureName = "homer.jpg";
   const decalTexture = textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}${ decalTextureName}`);
   decalTexture.needsUpdate = true;
   decalTexture.repeat.set(1,1);
   decalTexture.wrapS = RepeatWrapping;
   decalTexture.wrapT = RepeatWrapping;
-  const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
+  const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true, side: THREE.DoubleSide});
   decalMaterial.needsUpdate = true;
   //manipulate the correct and available vertex
   //CAN'T MANIPULATE megaBufferGeo??
