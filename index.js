@@ -62,7 +62,7 @@ export default () => {
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
   decalMaterial.needsUpdate = true;
   //manipulate the correct and available vertex
-  const megaBufferGeo = new THREE.PlaneBufferGeometry(200, 200, 2000, 2000)
+  const megaBufferGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
   megaBufferGeo.attributes.position.needsUpdate = true;
   megaBufferGeo.attributes.position.updateRange.offSet = 0;
   megaBufferGeo.attributes.position.updateRange.count = 600;
