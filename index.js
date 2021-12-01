@@ -61,6 +61,8 @@ export default () => {
   decalTexture.wrapT = RepeatWrapping;
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
   decalMaterial.needsUpdate = true;
+
+  //manipulate the correct and available vertex
   const megaBufferGeo = new THREE.PlaneBufferGeometry(200, 200, 8, 8)
   let megaMesh = new THREE.Mesh( megaBufferGeo, decalMaterial);
   megaMesh.name = "megaMesh";
@@ -184,10 +186,17 @@ export default () => {
           const result = physics.raycast(gunApp.position, gunApp.quaternion.clone().multiply(z180Quaternion));
           if (result) {
             // Decal creation
+            // Then create a megaMesh, which all bufferGeometry are fed into
+            // megaMesh has wrap texture?
+
+            //plan b
+            //just pass new buffer geometry to plane mesh...?
+            //figure out how to apply
             const normal = new THREE.Vector3().fromArray(result.normal);
             const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
             let plane = new THREE.Mesh( planeGeo, decalMaterial);
             plane.name = "DecalPlane"
+            console.log(planeGeo);
             const newPointVec = new THREE.Vector3().fromArray(result.point);
             const modiPoint = newPointVec.add(new Vector3(0, normal.y /20 ,0));
             plane.position.copy(modiPoint);
@@ -210,8 +219,7 @@ export default () => {
                 for (let i = 0; i < ptCout; i++)
                   {
                     // Use / move the same plane to shoot raycast.
-                    // Then create a megaMesh, which all bufferGeometry are fed into
-                    // megaMesh has wrap texture?
+                  
 
                       let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                       const pToWorld = plane.localToWorld(p);
