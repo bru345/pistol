@@ -217,6 +217,7 @@ export default () => {
             ));
 
             planeGeo.applyMatrix4(plane.matrixWorld)
+            planeGeo.applyQuaternion(plane.getWorldQuaternion())
             
             //confirming if issue is positional/rotation
             //REMOVE THIS. RESOLVE MATRIX FOR GEOMETRYBUFFER ELSEWHERE
