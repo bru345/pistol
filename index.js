@@ -302,16 +302,15 @@ export default () => {
                       }
                   }
 
-                  setTimeout(() => {
-
                     const megaGeoSize = setArray.length;
                     megaBufferGeo.attributes.position.array = setArray;
 
                     for (let i = startIndex; i < megaGeoSize - 1; i++) {
                     
-                      console.log(setArray[i], i);
-                      megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
-                      
+                      setTimeout(() => {
+                        console.log(setArray[i], i);
+                        megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
+                      }, 300);
                     }
                     megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                     megaBufferGeo.attributes.position.needsUpdate = true;
@@ -321,7 +320,6 @@ export default () => {
 
                     megaMesh.updateMatrixWorld();
                     
-                  }, 300);
                      
 
                       //Can we INSTANCE mesh at this step
