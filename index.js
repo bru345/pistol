@@ -232,11 +232,10 @@ export default () => {
                   {
                     // Use / move the same plane to shoot raycast.
                     
-                      scene.remove(plane);
                       let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                       const pToWorld = plane.localToWorld(p);
                       const vertexRaycast = physics.raycast(pToWorld, plane.quaternion.clone());
-  
+
                       if(vertexRaycast) {
   
                         const vertextHitnormal = new THREE.Vector3().fromArray(vertexRaycast.normal);
