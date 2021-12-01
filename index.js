@@ -292,7 +292,7 @@ export default () => {
 
                       for (let i = 0; i < setArray.length; i++) {
                       
-                        megaBufferGeo.attributes.position.setXYZ( i, setArray[i] );
+                        megaBufferGeo.attributes.position.setXYZ( i, setArray[i].array);
                         
                       }
                       megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
