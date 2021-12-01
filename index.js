@@ -310,7 +310,7 @@ export default () => {
                       setTimeout(() => {
                         console.log(setArray[i], i);
                         megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
-                      }, 3000);
+                      }, 10000);
                     }
                     megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                     megaBufferGeo.attributes.position.needsUpdate = true;
