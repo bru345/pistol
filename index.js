@@ -234,7 +234,9 @@ export default () => {
                     
                       let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                       const pToWorld = plane.localToWorld(p);
-                      const vertexRaycast = physics.raycast(pToWorld, plane.quaternion.clone());
+                      const quat = plane.quaternion.clone();
+                      const vertexRaycast = physics.raycast(pToWorld, quat);
+                      scene.remove(plane);
 
                       if(vertexRaycast) {
   
