@@ -239,7 +239,7 @@ export default () => {
                       const pToWorld = plane.localToWorld(p);
                       const quat = plane.quaternion.clone();
                       const vertexRaycast = physics.raycast(pToWorld, quat);
-                      scene.remove(plane);
+                      // scene.remove(plane);
 
                       if(vertexRaycast) {
   
@@ -268,19 +268,19 @@ export default () => {
 
                         dummyPosition.position.set(pointVec.x, pointVec.y, pointVec.z);
                         dummyPosition.updateWorldMatrix();
-                        const worldToLoc = megaMesh.worldToLocal(pointVec)
+                        const worldToLoc = plane.worldToLocal(pointVec)
 
                         const minClamp = -0.25;
                         const maxClamp = 3;
                         const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
-                        megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
+                        planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
-                      megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
-                      megaBufferGeo.attributes.position.needsUpdate = true;
-                      megaBufferGeo.computeVertexNormals();
-                      megaMesh.updateMatrixWorld();
+                      planeGeo.attributes.position.usage = THREE.DynamicDrawUsage;
+                      planeGeo.attributes.position.needsUpdate = true;
+                      planeGeo.computeVertexNormals();
+                      plane.updateMatrixWorld();
               } }, 100);
               console.log(megaMesh);
 
