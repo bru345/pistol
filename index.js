@@ -268,21 +268,21 @@ export default () => {
 
                         dummyPosition.position.set(pointVec.x, pointVec.y, pointVec.z);
                         dummyPosition.updateWorldMatrix();
-                        const worldToLoc = plane.worldToLocal(pointVec)
+                        const worldToLoc = megaMesh.worldToLocal(pointVec)
 
                         const minClamp = -0.25;
                         const maxClamp = 3;
                         const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
-                        planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
+                        megaBufferGeo.attributes.position.setXYZ( i, worldToLoc.x, worldToLoc.y, worldToLoc.z );
                       }
                   }
-                      planeGeo.attributes.position.usage = THREE.DynamicDrawUsage;
-                      planeGeo.attributes.position.needsUpdate = true;
-                      planeGeo.computeVertexNormals();
-                      plane.updateMatrixWorld();
+                      megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
+                      megaBufferGeo.attributes.position.needsUpdate = true;
+                      megaBufferGeo.computeVertexNormals();
+                      megaMesh.updateMatrixWorld();
               } }, 100);
-              console.log(megaMesh, "1");
+              console.log(megaMesh);
 
             explosionApp.position.fromArray(result.point);
             explosionApp.quaternion.setFromRotationMatrix(
