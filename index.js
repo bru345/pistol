@@ -219,7 +219,7 @@ export default () => {
             const dummyQuaternion = new THREE.Object3D();
 
             planeGeo.applyMatrix4(plane.matrixWorld)
-            planeGeo.applyQuaternion(dummyQuaternion.getWorldQuaternion(plane));
+            planeGeo.applyQuaternion(plane.quaternion.clone());
             
             //confirming if issue is positional/rotation
             //REMOVE THIS. RESOLVE MATRIX FOR GEOMETRYBUFFER ELSEWHERE
