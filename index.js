@@ -56,9 +56,9 @@ export default () => {
   const decalTextureName = "bulletHole.jpg";
   const decalTexture = textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}${ decalTextureName}`);
   decalTexture.needsUpdate = true;
-  // decalTexture.repeat.set(1000,1000);
-  // decalTexture.wrapS = RepeatWrapping;
-  // decalTexture.wrapT = RepeatWrapping;
+  decalTexture.repeat.set(1000,1000);
+  decalTexture.wrapS = RepeatWrapping;
+  decalTexture.wrapT = RepeatWrapping;
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
   decalMaterial.needsUpdate = true;
   //manipulate the correct and available vertex
@@ -291,7 +291,7 @@ export default () => {
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
 
                         //Need to add attributes before setting
-                        setArray.push(worldToLoc)
+                        setArray.push(clampedPos)
                         // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
