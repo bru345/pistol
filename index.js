@@ -301,21 +301,27 @@ export default () => {
                         // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
-                      megaBufferGeo.attributes.position.array = setArray;
 
-                      for (let i = startIndex; i < setArray.length - 1; i++) {
+                  setTimeout(() => {
+
+                    megaBufferGeo.attributes.position.array = setArray;
+
+                    for (let i = startIndex; i < setArray.length - 1; i++) {
+                    
+                      console.log(setArray[i], i);
+                      megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
                       
-                        console.log(setArray[i], i);
-                        megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
-                        
-                      }
-                      megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
-                      megaBufferGeo.attributes.position.needsUpdate = true;
-                      megaBufferGeo.computeVertexNormals();
+                    }
+                    megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
+                    megaBufferGeo.attributes.position.needsUpdate = true;
+                    megaBufferGeo.computeVertexNormals();
 
-                      
+                    
 
-                      megaMesh.updateMatrixWorld();
+                    megaMesh.updateMatrixWorld();
+                    
+                  }, 300);
+                     
 
                       //Can we INSTANCE mesh at this step
                       //You maybe making a drawcall everytime here..., i think instance mesh makes 1 initial drawcall
