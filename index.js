@@ -242,7 +242,7 @@ export default () => {
               if (planeGeo instanceof THREE.BufferGeometry)
               {
                 const startIndex = megaBufferGeo.attributes.position.array.length;
-                const indexModifier = 0;
+                let indexModifier = 0;
                 const newSize = megaBufferGeo.attributes.position.array.length + ptCout;
                 const setArray = [];
                 const megaFloatArray = new Float32Array(newSize)
@@ -310,7 +310,7 @@ export default () => {
 
                     const megaGeoSize = setArray.length;
                     //need to convert to float32 before continuing
-                    megaBufferGeo.attributes.position.array = setArray;
+                    megaBufferGeo.attributes.position.array = megaFloatArray;
 
                     // for (let i = startIndex; i < megaGeoSize - 1; i++) {
                     
