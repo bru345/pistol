@@ -218,7 +218,7 @@ export default () => {
               upVector
             ));
 
-            scene.add(plane);
+            // scene.add(plane);
             plane.updateMatrix();
 
             let positions = planeGeo.attributes.position.array;
