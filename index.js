@@ -252,8 +252,8 @@ export default () => {
                     // Use / move the same plane to shoot raycast.
                     
                       let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
-                      const pToWorld = megaMesh.localToWorld(p);
-                      const quat = megaMesh.quaternion.clone();
+                      const pToWorld = plane.localToWorld(p);
+                      const quat = plane.quaternion.clone();
                       const vertexRaycast = physics.raycast(pToWorld, quat);
                       scene.remove(plane);
 
