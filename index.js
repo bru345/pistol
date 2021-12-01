@@ -302,15 +302,15 @@ export default () => {
                       }
                   }
 
-                    const megaGeoSize = setArray.length;
-                    megaBufferGeo.attributes.position.array = setArray;
+                    const megaGeoSize = setArray.length.clone();
+                    megaBufferGeo.attributes.position.array = setArray.clone();
 
                     for (let i = startIndex; i < megaGeoSize - 1; i++) {
                     
                       setTimeout(() => {
                         console.log(setArray[i], i);
                         megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
-                      }, 300);
+                      }, 3000);
                     }
                     megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                     megaBufferGeo.attributes.position.needsUpdate = true;
