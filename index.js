@@ -64,8 +64,8 @@ export default () => {
   //manipulate the correct and available vertex
   const megaBufferGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
   megaBufferGeo.attributes.position.needsUpdate = true;
-  megaBufferGeo.attributes.position.updateRange.offSet = 0;
-  megaBufferGeo.attributes.position.updateRange.count = 600;
+  // megaBufferGeo.attributes.position.updateRange.offSet = 0;
+  // megaBufferGeo.attributes.position.updateRange.count = 600;
   let megaMesh = new THREE.Mesh( megaBufferGeo, decalMaterial);
   megaMesh.name = "megaMesh";
   megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
@@ -268,6 +268,7 @@ export default () => {
                       // megaBufferGeo.computeVertexNormals();
                 
                       megaMesh.updateMatrixWorld();
+                      console.log(megaMesh);
               } }, 100);
 
             explosionApp.position.fromArray(result.point);
