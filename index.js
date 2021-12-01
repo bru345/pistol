@@ -240,7 +240,7 @@ export default () => {
                       const pToWorld = plane.localToWorld(p);
                       const quat = plane.quaternion.clone();
                       const vertexRaycast = physics.raycast(pToWorld, quat);
-                      // scene.remove(plane);
+                      scene.remove(plane);
 
                       if(vertexRaycast) {
   
