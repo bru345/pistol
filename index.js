@@ -231,8 +231,8 @@ export default () => {
                 for (let i = 0; i < ptCout; i++)
                   {
                     // Use / move the same plane to shoot raycast.
-                  
-
+                    
+                      scene.remove(plane);
                       let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                       const pToWorld = plane.localToWorld(p);
                       const vertexRaycast = physics.raycast(pToWorld, plane.quaternion.clone());
@@ -275,8 +275,8 @@ export default () => {
                   }
                       megaBufferGeo.computeVertexNormals();
                       megaMesh.updateMatrixWorld();
-                      console.log(megaMesh);
               } }, 100);
+              console.log(megaMesh);
 
             explosionApp.position.fromArray(result.point);
             explosionApp.quaternion.setFromRotationMatrix(
