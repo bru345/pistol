@@ -215,6 +215,7 @@ export default () => {
             ));
             
             //confirming if issue is positional/rotation
+            //REMOVE THIS. RESOLVE MATRIX FOR GEOMETRYBUFFER ELSEWHERE
             megaMesh.position.copy(modiPoint);
             megaMesh.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
               plane.position,
@@ -224,6 +225,7 @@ export default () => {
 
             scene.add(plane);
             plane.updateMatrix();
+            megaMesh.updateMatrix();
 
             let positions = planeGeo.attributes.position.array;
             let ptCout = positions.length;
@@ -275,7 +277,7 @@ export default () => {
                         const maxClamp = 3;
                         const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
-                        megaBufferGeo.attributes.position.setXYZ( i, worldToLoc.x, worldToLoc.y, worldToLoc.z );
+                        megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
                       megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
