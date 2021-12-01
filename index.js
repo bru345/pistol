@@ -63,6 +63,7 @@ export default () => {
   decalMaterial.needsUpdate = true;
   //manipulate the correct and available vertex
   const megaBufferGeo = new THREE.PlaneBufferGeometry(200, 200, 2000, 2000)
+  megaBufferGeo.attributes.position.needsUpdate = true;
   let megaMesh = new THREE.Mesh( megaBufferGeo, decalMaterial);
   megaMesh.name = "megaMesh";
   megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
@@ -262,8 +263,6 @@ export default () => {
                         megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
-                      megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
-                      megaBufferGeo.attributes.position.needsUpdate = true;
                       megaBufferGeo.computeVertexNormals();
                 
                       megaMesh.updateMatrixWorld();
