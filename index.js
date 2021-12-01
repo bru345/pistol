@@ -61,11 +61,12 @@ export default () => {
   decalTexture.wrapT = RepeatWrapping;
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
   decalMaterial.needsUpdate = true;
-
   //manipulate the correct and available vertex
   const megaBufferGeo = new THREE.PlaneBufferGeometry(200, 200, 2000, 2000)
   let megaMesh = new THREE.Mesh( megaBufferGeo, decalMaterial);
   megaMesh.name = "megaMesh";
+  megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
+  megaBufferGeo.setDrawRange(0, 81)
   scene.add(megaMesh);
   console.log(megaMesh);
 
@@ -235,7 +236,7 @@ export default () => {
                           debugMesh.push(debugCube);
                           scene.add( debugCube );
                         }
-                        megaBufferGeo.setDrawRange(0, 81)
+               
                         const dummyPosition = new THREE.Object3D();
                         scene.add( dummyPosition );
                         const convertedVal = new Float32Array(vertexRaycast.point)
