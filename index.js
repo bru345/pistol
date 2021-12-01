@@ -242,11 +242,14 @@ export default () => {
               if (planeGeo instanceof THREE.BufferGeometry)
               {
                 const startIndex = megaBufferGeo.attributes.position.array.length;
+                const indexModifier = 0;
                 const newSize = megaBufferGeo.attributes.position.array.length + ptCout;
                 const setArray = [];
+                const megaFloatArray = new Float32Array(newSize)
 
                 for (let i = 0; i < newSize; i++) {
                   setArray[i] = new Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
+                  megaFloatArray[i] = positions[i];
                 }
 
 
@@ -296,13 +299,17 @@ export default () => {
                         const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
 
+                        indexModifier+= 1;
+                        const megaIndex = startIndex + indexModifier;
                         //Need to add attributes before setting
                         setArray.push(worldToLoc)
+                        megaFloatArray[megaIndex]
                         // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
 
                     const megaGeoSize = setArray.length;
+                    //need to convert to float32 before continuing
                     megaBufferGeo.attributes.position.array = setArray;
 
                     // for (let i = startIndex; i < megaGeoSize - 1; i++) {
