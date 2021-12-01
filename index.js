@@ -276,12 +276,13 @@ export default () => {
 
                         const minClamp = -0.25;
                         const maxClamp = 3;
+
+                        //should the geo be in a megaarray? or do we read the megaMesh position everytime and create ontop etc..
                         const setArray = [];
                         const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
 
                         //Need to add attributes before setting
-
                         setArray[i].push(new Float32Array(clampedPos.toArray))
                         // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
