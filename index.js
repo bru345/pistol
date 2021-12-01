@@ -257,12 +257,12 @@ export default () => {
                         const maxClamp = 3;
                         const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
-                        planeGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
+                        megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
-                      planeGeo.attributes.position.usage = THREE.DynamicDrawUsage;
-                      planeGeo.attributes.position.needsUpdate = true;
-                      planeGeo.computeVertexNormals();
+                      megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
+                      megaBufferGeo.attributes.position.needsUpdate = true;
+                      megaBufferGeo.computeVertexNormals();
                       plane.updateMatrixWorld();
               } }, 100);
 
