@@ -202,7 +202,7 @@ export default () => {
             //figure out how to apply
             const normal = new THREE.Vector3().fromArray(result.normal);
             const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
-            let plane = new THREE.Mesh( planeGeo, new MeshBasicMaterial());
+            let plane = new THREE.Mesh( planeGeo, new MeshBasicMaterial({transparent: true}));
             plane.name = "DecalPlane"
             console.log(planeGeo);
             const newPointVec = new THREE.Vector3().fromArray(result.point);
