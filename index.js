@@ -53,7 +53,7 @@ export default () => {
 
   const textureLoader = new THREE.TextureLoader();
 
-  const decalTextureName = "homer.jpg";
+  const decalTextureName = "homer.png";
   const decalTexture = textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}${ decalTextureName}`);
   decalTexture.needsUpdate = true;
   decalTexture.repeat.set(1,1);
