@@ -221,12 +221,12 @@ export default () => {
             scene.add(plane);
             plane.updateMatrix();
 
-            let positions = planeGeo.attributes.position.array;
+            let positions = megaBufferGeo.attributes.position.array;
             let ptCout = positions.length;
 
             // Decal vertex manipulation
             setTimeout(() => {  
-              if (planeGeo instanceof THREE.BufferGeometry)
+              if (megaBufferGeo instanceof THREE.BufferGeometry)
               {
                 for (let i = 0; i < ptCout; i++)
                   {
