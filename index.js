@@ -62,13 +62,16 @@ export default () => {
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
   decalMaterial.needsUpdate = true;
   //manipulate the correct and available vertex
-  const megaBufferGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
+  megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
   megaBufferGeo.attributes.position.needsUpdate = true;
+  const megaBufferGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
   // megaBufferGeo.attributes.position.updateRange.offSet = 0;
   // megaBufferGeo.attributes.position.updateRange.count = 600;
   let megaMesh = new THREE.Mesh( megaBufferGeo, decalMaterial);
   megaMesh.name = "megaMesh";
   megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
+  megaBufferGeo.attributes.position.needsUpdate = true;
+
   // megaBufferGeo.setDrawRange(0, 2500)
   scene.add(megaMesh);
   console.log(megaMesh);
@@ -221,12 +224,12 @@ export default () => {
             scene.add(plane);
             plane.updateMatrix();
 
-            let positions = megaBufferGeo.attributes.position.array;
+            let positions = planeGeo.attributes.position.array;
             let ptCout = positions.length;
 
             // Decal vertex manipulation
             setTimeout(() => {  
-              if (megaBufferGeo instanceof THREE.BufferGeometry)
+              if (planeGeo instanceof THREE.BufferGeometry)
               {
                 for (let i = 0; i < ptCout; i++)
                   {
@@ -274,6 +277,8 @@ export default () => {
                         megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
+                      megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
+                      megaBufferGeo.attributes.position.needsUpdate = true;
                       megaBufferGeo.computeVertexNormals();
                       megaMesh.updateMatrixWorld();
               } }, 100);
