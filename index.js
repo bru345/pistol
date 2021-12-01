@@ -290,7 +290,6 @@ export default () => {
                       const iMesh = new InstancedMesh(megaBufferGeo, decalMaterial,1);
                       
                       scene.add(iMesh);
-                      iMesh.position.set(megaMesh.getWorldPosition().x, megaMesh.getWorldPosition().y, megaMesh.getWorldPosition().z)
               } }, 100);
               console.log(megaMesh);
 
