@@ -56,9 +56,9 @@ export default () => {
   const decalTextureName = "bulletHole.jpg";
   const decalTexture = textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}${ decalTextureName}`);
   decalTexture.needsUpdate = true;
-  decalTexture.repeat.set(5,5);
-  decalTexture.wrapS = RepeatWrapping;
-  decalTexture.wrapT = RepeatWrapping;
+  // decalTexture.repeat.set(5,5);
+  // decalTexture.wrapS = RepeatWrapping;
+  // decalTexture.wrapT = RepeatWrapping;
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
   decalMaterial.needsUpdate = true;
   //manipulate the correct and available vertex
@@ -228,8 +228,8 @@ export default () => {
             plane.updateMatrix();
             megaMesh.updateMatrix();
 
-            let positions = planeGeo.attributes.position.array;
-            let ptCout = positions.length;
+            const positions = planeGeo.attributes.position.array;
+            const ptCout = positions.length;
 
             // Decal vertex manipulation
             setTimeout(() => {  
@@ -297,7 +297,7 @@ export default () => {
                   }
                    //   megaBufferGeo.attributes.position.set(setArray)
 
-                      for (let i = 0; i < setArray.length; i++) {
+                      for (let i = startIndex; i < setArray.length; i++) {
                       
                         megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
                         
