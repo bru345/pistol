@@ -69,7 +69,7 @@ export default () => {
   let megaMesh = new THREE.Mesh( megaBufferGeo, decalMaterial);
   megaMesh.name = "megaMesh";
   megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
-  megaBufferGeo.setDrawRange(0, 2500)
+  // megaBufferGeo.setDrawRange(0, 2500)
   scene.add(megaMesh);
   console.log(megaMesh);
 
