@@ -305,6 +305,7 @@ export default () => {
 
                       for (let i = startIndex; i < setArray.length; i++) {
                       
+                        console.log(setArray[i]);
                         megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
                         
                       }
