@@ -237,10 +237,10 @@ export default () => {
               {
                 const startIndex = megaBufferGeo.attributes.position.array.length;
                 const newSize = megaBufferGeo.attributes.position.array.length + ptCout;
-                const setArray = new Float32Array(newSize);
+                const setArray = [];
 
                 for (let i = 0; i < newSize; i++) {
-                  setArray[i] = megaBufferGeo.attributes.position.array[i];
+                  setArray[i] = new Vector3().fromArray(megaBufferGeo.attributes.position.array[i]);
                 }
 
 
