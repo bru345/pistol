@@ -235,7 +235,14 @@ export default () => {
             setTimeout(() => {  
               if (planeGeo instanceof THREE.BufferGeometry)
               {
-                const setArray = megaBufferGeo.attributes.position.array;
+                const startIndex = megaBufferGeo.attributes.position.array.length;
+                const newSize = megaBufferGeo.attributes.position.array.length + ptCout;
+                const setArray = new Array(newSize);
+
+                for (let i = 0; i < newSize; i++) {
+                  setArray[i] = megaBufferGeo.attributes.position[i];
+                }
+
 
                 for (let i = 0; i < ptCout; i++)
                   {
