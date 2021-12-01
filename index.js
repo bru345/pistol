@@ -201,6 +201,7 @@ export default () => {
             //just pass new buffer geometry to plane mesh...?
             //figure out how to apply
             const normal = new THREE.Vector3().fromArray(result.normal);
+            // Apply the correct transform to the planebuffergeometry before passing it to
             const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
             let plane = new THREE.Mesh( planeGeo, new MeshPhysicalMaterial({transparent: true}));
             plane.name = "DecalPlane"
@@ -216,12 +217,12 @@ export default () => {
             
             //confirming if issue is positional/rotation
             //REMOVE THIS. RESOLVE MATRIX FOR GEOMETRYBUFFER ELSEWHERE
-            megaMesh.position.copy(modiPoint);
-            megaMesh.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
-              plane.position,
-              plane.position.clone().sub(normal),
-              upVector
-            ));
+            // megaMesh.position.copy(modiPoint);
+            // megaMesh.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
+            //   plane.position,
+            //   plane.position.clone().sub(normal),
+            //   upVector
+            // ));
 
             scene.add(plane);
             plane.updateMatrix();
@@ -275,11 +276,17 @@ export default () => {
 
                         const minClamp = -0.25;
                         const maxClamp = 3;
+                        const setArray = [];
                         const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
-                        megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
+
+                        //Need to add attributes before setting
+
+                        setArray[i].push(new Float32Array(clampedPos.toArray))
+                        // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
+                      megaBufferGeo.attributes.position.set(setArray)
                       megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                       megaBufferGeo.attributes.position.needsUpdate = true;
                       megaBufferGeo.computeVertexNormals();
@@ -287,6 +294,9 @@ export default () => {
 
                       //Can we INSTANCE mesh at this step
                       //You maybe making a drawcall everytime here..., i think instance mesh makes 1 initial drawcall
+                      //TODO IGNORE INSTANCE MESHING. Continue with megamesh logic...pass buffer geometry through it,
+                      //with correct matrix
+                      //DONT DO INSTANCE MESH
                       const iMesh = new InstancedMesh(megaBufferGeo, decalMaterial,1);
                       
                       scene.add(iMesh);
