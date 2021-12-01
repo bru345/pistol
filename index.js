@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import metaversefile from 'metaversefile';
-import { RepeatWrapping, Vector3 } from 'three';
+import { Matrix4, RepeatWrapping, Vector3 } from 'three';
 import { clamp } from 'three/src/math/MathUtils';
 const {useApp, useFrame, useActivate, useWear, useUse, useLocalPlayer, usePhysics, useScene, getNextInstanceId, getAppByPhysicsId, useWorld, useDefaultModules, useCleanup} = metaversefile;
 
@@ -56,9 +56,9 @@ export default () => {
   const decalTextureName = "bulletHole.jpg";
   const decalTexture = textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}${ decalTextureName}`);
   decalTexture.needsUpdate = true;
-  decalTexture.repeat.set(1000,1000);
-  decalTexture.wrapS = RepeatWrapping;
-  decalTexture.wrapT = RepeatWrapping;
+  // decalTexture.repeat.set(1000,1000);
+  // decalTexture.wrapS = RepeatWrapping;
+  // decalTexture.wrapT = RepeatWrapping;
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true});
   decalMaterial.needsUpdate = true;
   //manipulate the correct and available vertex
@@ -205,6 +205,14 @@ export default () => {
             const modiPoint = newPointVec.add(new Vector3(0, normal.y /20 ,0));
             plane.position.copy(modiPoint);
             plane.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
+              plane.position,
+              plane.position.clone().sub(normal),
+              upVector
+            ));
+            
+            //confirming if issue is positional/rotation
+            megaMesh.position.copy(modiPoint);
+            megaMesh.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
               plane.position,
               plane.position.clone().sub(normal),
               upVector
