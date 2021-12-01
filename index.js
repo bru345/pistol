@@ -256,7 +256,7 @@ export default () => {
 
                         dummyPosition.position.set(pointVec.x, pointVec.y, pointVec.z);
                         dummyPosition.updateWorldMatrix();
-                        const worldToLoc = plane.worldToLocal(pointVec)
+                        const worldToLoc = megaMesh.worldToLocal(pointVec)
 
                         const minClamp = -0.25;
                         const maxClamp = 3;
