@@ -65,7 +65,7 @@ export default () => {
   const megaBufferGeo = new THREE.PlaneBufferGeometry(200, 200, 2000, 2000)
   megaBufferGeo.attributes.position.needsUpdate = true;
   megaBufferGeo.attributes.position.updateRange.offSet = 0;
-  megaBufferGeo.attributes.position.updateRange.count = 5;
+  megaBufferGeo.attributes.position.updateRange.count = 1;
   let megaMesh = new THREE.Mesh( megaBufferGeo, decalMaterial);
   megaMesh.name = "megaMesh";
   megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
@@ -265,7 +265,7 @@ export default () => {
                         megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
-                      megaBufferGeo.computeVertexNormals();
+                      // megaBufferGeo.computeVertexNormals();
                 
                       megaMesh.updateMatrixWorld();
               } }, 100);
