@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import metaversefile from 'metaversefile';
-import { Matrix4, MeshBasicMaterial, MeshPhysicalMaterial, RepeatWrapping, Vector3 } from 'three';
+import { InstancedMesh, Matrix4, MeshBasicMaterial, MeshPhysicalMaterial, RepeatWrapping, Vector3 } from 'three';
 import { clamp } from 'three/src/math/MathUtils';
 const {useApp, useFrame, useActivate, useWear, useUse, useLocalPlayer, usePhysics, useScene, getNextInstanceId, getAppByPhysicsId, useWorld, useDefaultModules, useCleanup} = metaversefile;
 
@@ -284,6 +284,13 @@ export default () => {
                       megaBufferGeo.attributes.position.needsUpdate = true;
                       megaBufferGeo.computeVertexNormals();
                       megaMesh.updateMatrixWorld();
+
+                      //Can we INSTANCE mesh at this step
+                      //You maybe making a drawcall everytime here..., i think instance mesh makes 1 initial drawcall
+                      const iMesh = new InstancedMesh(megaBufferGeo, decalMaterial,1);
+                      
+                      scene.add(iMesh);
+                      iMesh.position.set(megaMesh.getWorldPosition().x, megaMesh.getWorldPosition().y, megaMesh.getWorldPosition().z)
               } }, 100);
               console.log(megaMesh);
 
