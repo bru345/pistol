@@ -240,7 +240,7 @@ export default () => {
                 const setArray = new Array(newSize);
 
                 for (let i = 0; i < newSize; i++) {
-                  setArray[i] = megaBufferGeo.attributes.position[i];
+                  setArray[i] = megaBufferGeo.attributes.position.array[i];
                 }
 
 
