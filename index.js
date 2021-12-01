@@ -202,6 +202,7 @@ export default () => {
             //figure out how to apply
             const normal = new THREE.Vector3().fromArray(result.normal);
             // Apply the correct transform to the planebuffergeometry before passing it to
+            // You have to take the normals too??
             const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
             let plane = new THREE.Mesh( planeGeo, new MeshPhysicalMaterial({transparent: true}));
             plane.name = "DecalPlane"
@@ -291,7 +292,7 @@ export default () => {
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
 
                         //Need to add attributes before setting
-                        setArray.push(clampedPos)
+                        setArray.push(worldToLoc)
                         // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
