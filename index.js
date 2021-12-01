@@ -240,7 +240,7 @@ export default () => {
                         const convertedVal = new Float32Array(vertexRaycast.point)
                         const offSet = 14;
                         const pointVec =  dummyPosition.localToWorld(new THREE.Vector3().fromArray(convertedVal).add(
-                          new Vector3(0, vertextHitnormal.y / offSet,0 )
+                          new Vector3(0, vertextHitnormal.y / offSet, 0)
                         ));
 
                         if (debugDecalVertPos) {
@@ -263,7 +263,7 @@ export default () => {
                       megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                       megaBufferGeo.attributes.position.needsUpdate = true;
                       megaBufferGeo.computeVertexNormals();
-                      plane.updateMatrixWorld();
+                      megaMesh.updateMatrixWorld();
               } }, 100);
 
             explosionApp.position.fromArray(result.point);
