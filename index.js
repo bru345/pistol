@@ -252,7 +252,6 @@ export default () => {
                       const quat = plane.quaternion.clone();
                       const vertexRaycast = physics.raycast(pToWorld, quat);
                       // removing the white plane
-                      // scene.remove(plane);
 
                       if(vertexRaycast) {
   
@@ -299,7 +298,7 @@ export default () => {
                         megaFloatArray[megaIndex  + 2] = worldToLoc.z;
                       }
                   }
-
+                  scene.remove(plane);
                   // Where we update the postiion and 
                     const megaGeoSize = setArray.length;
                     megaBufferGeo.attributes.position.array = megaFloatArray;
