@@ -241,7 +241,7 @@ export default () => {
                 const newSize = megaBufferGeo.attributes.position.array.length + ptCout;
                 const setArray = [];
 
-                //declaring new megaGeometry which includes old megaGeo + new new positions
+                //declaring new megaGeometry which includes old megaGeo +  new positions count
                 const megaFloatArray = new Float32Array(newSize)
 
                 for (let i = 0; i < newSize; i++) {
@@ -280,7 +280,7 @@ export default () => {
 
                           // represents where the vertex should wrap to
                           // indicates that the wrapping values are correct...
-                          // Yet we see no wrap for the texture, only for cubes
+                          // wrapping broke for our decal, but positions/debug cubes are correct...
                           debugMesh[i].position.set(pointVec.x, pointVec.y, pointVec.z);
                           debugMesh[i].updateWorldMatrix();
                         }
@@ -300,26 +300,25 @@ export default () => {
                         const megaIndex = startIndex + indexModifier;
 
                         setArray.push(worldToLoc)
-                        
+
                         //adding our positions to the end of the geoArray
                         megaFloatArray[megaIndex] = worldToLoc.x;
                         megaFloatArray[megaIndex  + 1] = worldToLoc.y;
                         megaFloatArray[megaIndex  + 2] = worldToLoc.z;
                       }
                   }
-                  // removing the white plane after using it for positonal
+                  // removing the white plane after using it for position conversion/raycasts
                   scene.remove(plane);
 
-                  // Where we update the postiion and 
-                    const megaGeoSize = setArray.length;
 
                     // After this step, we SHOULD be seeing another decale duplicate or form...?
-                    // Might be just copying over the same spot?  
+                    // Might be just copying over the same spot? 
                     // Have not taken UVs into account..
                     megaBufferGeo.attributes.position.array = megaFloatArray;
 
 
                     // Redundant? we're already passing the megaFloatArray
+                    // const megaGeoSize = setArray.length;
                     // for (let i = startIndex; i < megaGeoSize - 1; i++) {
                     //     megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
                     // }
