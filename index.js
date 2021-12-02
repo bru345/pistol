@@ -56,13 +56,13 @@ export default () => {
   const decalTextureName = "homer.png";
   const decalTexture = textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}${ decalTextureName}`);
   decalTexture.needsUpdate = true;
+
+  //Is repeating needed? How else will we draw the decal texture on every single vertex group we seperate out
   decalTexture.repeat.set(1,1);
   decalTexture.wrapS = RepeatWrapping;
   decalTexture.wrapT = RepeatWrapping;
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true, side: THREE.DoubleSide});
   decalMaterial.needsUpdate = true;
-  //manipulate the correct and available vertex
-  //CAN'T MANIPULATE megaBufferGeo??
   const megaBufferGeo = new THREE.PlaneBufferGeometry(0.5,0.5, 8, 8)
   // megaBufferGeo.attributes.position.updateRange.offSet = 0;
   // megaBufferGeo.attributes.position.updateRange.count = 600
@@ -231,6 +231,7 @@ export default () => {
             const ptCout = positions.length;
 
             // Decal vertex manipulation
+            // TODO Decal wrapping is broken
             setTimeout(() => {  
                 const startIndex = megaBufferGeo.attributes.position.array.length;
                 let indexModifier = 0;
@@ -250,7 +251,8 @@ export default () => {
                       const pToWorld = plane.localToWorld(p);
                       const quat = plane.quaternion.clone();
                       const vertexRaycast = physics.raycast(pToWorld, quat);
-                      scene.remove(plane);
+                      // removing the white plane
+                      // scene.remove(plane);
 
                       if(vertexRaycast) {
   
@@ -304,10 +306,13 @@ export default () => {
 
 
                     // Redundant? we're already passing the megaFloatArray
-                    // for (let i = startIndex; i < megaGeoSize - 1; i++) {
-                    //     console.log(setArray[i], i);
-                    //     megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
-                    // }
+                    // After this step, we SHOULD be seeing another decale duplicate or form...?
+                    // Might be just copying over the same spot?  
+                    // Have not taken UVs into account..
+                    for (let i = startIndex; i < megaGeoSize - 1; i++) {
+                        console.log(setArray[i], i);
+                        megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
+                    }
                     megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                     megaBufferGeo.attributes.position.needsUpdate = true;
 
