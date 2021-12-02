@@ -316,11 +316,8 @@ export default () => {
                     megaBufferGeo.attributes.position.array = megaFloatArray;
 
                     for (let i = startIndex; i < megaGeoSize - 1; i++) {
-                    
-                      setTimeout(() => {
                         console.log(setArray[i], i);
                         megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
-                      }, 100);
                     }
                     megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                     megaBufferGeo.attributes.position.needsUpdate = true;
