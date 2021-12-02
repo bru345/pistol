@@ -57,13 +57,14 @@ export default () => {
   const decalTexture = textureLoader.load(`${import.meta.url.replace(/(\/)[^\/]*$/, '$1')}${ decalTextureName}`);
   decalTexture.needsUpdate = true;
 
-  //Is repeating needed? How else will we draw the decal texture on every single vertex group we seperate out
+  //Is repeating needed for megaMesh decal to work? How else will we draw the decal texture on every single vertex group we seperate out
   decalTexture.repeat.set(1,1);
   decalTexture.wrapS = RepeatWrapping;
   decalTexture.wrapT = RepeatWrapping;
   const decalMaterial = new THREE.MeshPhysicalMaterial({map:decalTexture, alphaMap: decalTexture, transparent: true, depthWrite: true, depthTest: true, side: THREE.DoubleSide});
   decalMaterial.needsUpdate = true;
   const megaBufferGeo = new THREE.PlaneBufferGeometry(0.5,0.5, 8, 8)
+
   // megaBufferGeo.attributes.position.updateRange.offSet = 0;
   // megaBufferGeo.attributes.position.updateRange.count = 600
   megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
@@ -197,11 +198,10 @@ export default () => {
             const normal = new THREE.Vector3().fromArray(result.normal);
 
             // Still generating plane for DEBUGGING purposes
-            // TODO Move plane at initialisation and just update position, in order to use it in scene for firing raycasts etc
+            // TODO Move plane to initialisation and just update position, in order to use it in scene for firing raycasts etc
             const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
             let plane = new THREE.Mesh( planeGeo, new MeshPhysicalMaterial({transparent: true}));
             plane.name = "DecalPlane"
-            console.log(planeGeo);
             const newPointVec = new THREE.Vector3().fromArray(result.point);
             const modiPoint = newPointVec.add(new Vector3(0, normal.y /20 ,0));
             plane.position.copy(modiPoint);
@@ -211,11 +211,12 @@ export default () => {
               upVector
             ));
 
-            // planeGeo rotation not appearing
+            // TODO planeGeo needs to update to the planes new position/quaternion..
             // planeGeo.applyMatrix4(plane.matrixWorld)
             // planeGeo.applyQuaternion(plane.quaternion.clone());
             
-            //REMOVE THIS. RESOLVE MATRIX FOR GEOMETRYBUFFER ELSEWHERE, RESOLVE WITH applying matrix/quaternion to planeGeo.
+            //TODO To remove. megaMesh postion/quaternion should never be repositioned. RESOLVE WITH applying matrix/quaternion to planeGeo.
+            //TODO changing rotation for DEBUGGING purposes
             megaMesh.position.copy(modiPoint);
             megaMesh.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
               plane.position,
@@ -234,10 +235,13 @@ export default () => {
             // Decal vertex manipulation
             // TODO Decal wrapping is broken
             setTimeout(() => {  
+
                 const startIndex = megaBufferGeo.attributes.position.array.length;
                 let indexModifier = 0;
                 const newSize = megaBufferGeo.attributes.position.array.length + ptCout;
                 const setArray = [];
+
+                //declaring new megaGeometry which includes old megaGeo + new new positions
                 const megaFloatArray = new Float32Array(newSize)
 
                 for (let i = 0; i < newSize; i++) {
@@ -276,7 +280,7 @@ export default () => {
 
                           // represents where the vertex should wrap to
                           // indicates that the wrapping values are correct...
-                          // Yet decal has stopped wrapping...
+                          // Yet we see no wrap for the texture, only for cubes
                           debugMesh[i].position.set(pointVec.x, pointVec.y, pointVec.z);
                           debugMesh[i].updateWorldMatrix();
                         }
@@ -295,8 +299,9 @@ export default () => {
                         indexModifier+= 1;
                         const megaIndex = startIndex + indexModifier;
 
-                        //Need to add attributes before setting
                         setArray.push(worldToLoc)
+                        
+                        //adding our positions to the end of the geoArray
                         megaFloatArray[megaIndex] = worldToLoc.x;
                         megaFloatArray[megaIndex  + 1] = worldToLoc.y;
                         megaFloatArray[megaIndex  + 2] = worldToLoc.z;
@@ -315,15 +320,13 @@ export default () => {
 
 
                     // Redundant? we're already passing the megaFloatArray
-                    for (let i = startIndex; i < megaGeoSize - 1; i++) {
-                        console.log(setArray[i], i);
-                        megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
-                    }
+                    // for (let i = startIndex; i < megaGeoSize - 1; i++) {
+                    //     megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
+                    // }
                     megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                     megaBufferGeo.attributes.position.needsUpdate = true;
 
                }, 100);
-              console.log(megaMesh);
 
             explosionApp.position.fromArray(result.point);
             explosionApp.quaternion.setFromRotationMatrix(
