@@ -249,7 +249,7 @@ export default () => {
 
                 for (let i = 0; i < newSize; i++) {
                   setArray[i] = new Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
-                  megaFloatArray[i] = positions[i];
+                  megaFloatArray[i] = positions[i]?  positions[i] : 0;
                 }
 
 
