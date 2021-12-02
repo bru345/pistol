@@ -303,9 +303,9 @@ export default () => {
                         const megaIndex = startIndex + indexModifier;
                         //Need to add attributes before setting
                         setArray.push(worldToLoc)
-                        megaFloatArray[megaIndex * 3] = worldToLoc.x;
-                        megaFloatArray[megaIndex * 3 + 1] = worldToLoc.y;
-                        megaFloatArray[megaIndex * 3 + 2] = worldToLoc.z;
+                        megaFloatArray[megaIndex] = worldToLoc.x;
+                        megaFloatArray[megaIndex  + 1] = worldToLoc.y;
+                        megaFloatArray[megaIndex  + 2] = worldToLoc.z;
 
                         // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
