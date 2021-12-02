@@ -303,7 +303,10 @@ export default () => {
                         const megaIndex = startIndex + indexModifier;
                         //Need to add attributes before setting
                         setArray.push(worldToLoc)
-                        megaFloatArray[megaIndex] = convertedVal;
+                        megaFloatArray[megaIndex * 3] = worldToLoc.x;
+                        megaFloatArray[megaIndex * 3 + 1] = worldToLoc.y;
+                        megaFloatArray[megaIndex * 3 + 2] = worldToLoc.z;
+
                         // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
@@ -312,16 +315,16 @@ export default () => {
                     //need to convert to float32 before continuing
                     megaBufferGeo.attributes.position.array = megaFloatArray;
 
-                    // for (let i = startIndex; i < megaGeoSize - 1; i++) {
+                    for (let i = startIndex; i < megaGeoSize - 1; i++) {
                     
-                    //   setTimeout(() => {
-                    //     console.log(setArray[i], i);
-                    //     megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
-                    //   }, 10000);
-                    // }
-                    // megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
-                    // megaBufferGeo.attributes.position.needsUpdate = true;
-                    // megaBufferGeo.computeVertexNormals();
+                      setTimeout(() => {
+                        console.log(setArray[i], i);
+                        megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
+                      }, 10000);
+                    }
+                    megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
+                    megaBufferGeo.attributes.position.needsUpdate = true;
+                    megaBufferGeo.computeVertexNormals();
 
                     
 
