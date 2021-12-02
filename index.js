@@ -229,7 +229,8 @@ export default () => {
 
             const positions = planeGeo.attributes.position.array;
             const ptCout = positions.length;
-
+            
+            // Need to wait
             // Decal vertex manipulation
             // TODO Decal wrapping is broken
             setTimeout(() => {  
@@ -251,7 +252,6 @@ export default () => {
                       const pToWorld = plane.localToWorld(p);
                       const quat = plane.quaternion.clone();
                       const vertexRaycast = physics.raycast(pToWorld, quat);
-                      // removing the white plane
 
                       if(vertexRaycast) {
   
@@ -298,7 +298,9 @@ export default () => {
                         megaFloatArray[megaIndex  + 2] = worldToLoc.z;
                       }
                   }
+                  // removing the white plane after using it for positonal reasons..
                   scene.remove(plane);
+
                   // Where we update the postiion and 
                     const megaGeoSize = setArray.length;
                     megaBufferGeo.attributes.position.array = megaFloatArray;
