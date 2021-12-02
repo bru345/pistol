@@ -193,16 +193,11 @@ export default () => {
         {
           const result = physics.raycast(gunApp.position, gunApp.quaternion.clone().multiply(z180Quaternion));
           if (result) {
-            // Decal creation
-            // Then create a megaMesh, which all bufferGeometry are fed into
-            // megaMesh has wrap texture?
 
-            //plan b
-            //just pass new buffer geometry to plane mesh...?
-            //figure out how to apply
             const normal = new THREE.Vector3().fromArray(result.normal);
-            // Apply the correct transform to the planebuffergeometry before passing it to
-            // You have to take the normals too??
+
+            // Still generating plane for DEBUGGING purposes
+            // TODO Move plane at initialisation and just update position, in order to use it in scene for firing raycasts etc
             const planeGeo = new THREE.PlaneBufferGeometry(0.5, 0.5, 8, 8)
             let plane = new THREE.Mesh( planeGeo, new MeshPhysicalMaterial({transparent: true}));
             plane.name = "DecalPlane"
@@ -216,13 +211,11 @@ export default () => {
               upVector
             ));
 
-            // const dummyQuaternion = new THREE.Object3D();
-
+            // planeGeo rotation not appearing
             // planeGeo.applyMatrix4(plane.matrixWorld)
             // planeGeo.applyQuaternion(plane.quaternion.clone());
             
-            //confirming if issue is positional/rotation
-            //REMOVE THIS. RESOLVE MATRIX FOR GEOMETRYBUFFER ELSEWHERE
+            //REMOVE THIS. RESOLVE MATRIX FOR GEOMETRYBUFFER ELSEWHERE, RESOLVE WITH applying matrix/quaternion to planeGeo.
             megaMesh.position.copy(modiPoint);
             megaMesh.quaternion.setFromRotationMatrix( new THREE.Matrix4().lookAt(
               plane.position,
@@ -239,8 +232,6 @@ export default () => {
 
             // Decal vertex manipulation
             setTimeout(() => {  
-              if (planeGeo instanceof THREE.BufferGeometry)
-              {
                 const startIndex = megaBufferGeo.attributes.position.array.length;
                 let indexModifier = 0;
                 const newSize = megaBufferGeo.attributes.position.array.length + ptCout;
@@ -255,8 +246,6 @@ export default () => {
 
                 for (let i = 0; i < ptCout; i++)
                   {
-                    // Use / move the same plane to shoot raycast.
-                    
                       let p = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
                       const pToWorld = plane.localToWorld(p);
                       const quat = plane.quaternion.clone();
@@ -295,47 +284,34 @@ export default () => {
                         const minClamp = -0.25;
                         const maxClamp = 3;
 
-                        //should the geo be in a megaarray? or do we read the megaMesh position everytime and create ontop etc..
                         const clampedPos = new Vector3(clamp(worldToLoc.x, minClamp, maxClamp), 
                         clamp(worldToLoc.y, minClamp, maxClamp), clamp(worldToLoc.z, minClamp, maxClamp));
 
                         indexModifier+= 1;
                         const megaIndex = startIndex + indexModifier;
+
                         //Need to add attributes before setting
                         setArray.push(worldToLoc)
                         megaFloatArray[megaIndex] = worldToLoc.x;
                         megaFloatArray[megaIndex  + 1] = worldToLoc.y;
                         megaFloatArray[megaIndex  + 2] = worldToLoc.z;
-
-                        // megaBufferGeo.attributes.position.setXYZ( i, clampedPos.x, clampedPos.y, clampedPos.z );
                       }
                   }
 
+                  // Where we update the postiion and 
                     const megaGeoSize = setArray.length;
-                    //need to convert to float32 before continuing
                     megaBufferGeo.attributes.position.array = megaFloatArray;
 
-                    for (let i = startIndex; i < megaGeoSize - 1; i++) {
-                        console.log(setArray[i], i);
-                        megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
-                    }
+
+                    // Redundant? we're already passing the megaFloatArray
+                    // for (let i = startIndex; i < megaGeoSize - 1; i++) {
+                    //     console.log(setArray[i], i);
+                    //     megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
+                    // }
                     megaBufferGeo.attributes.position.usage = THREE.DynamicDrawUsage;
                     megaBufferGeo.attributes.position.needsUpdate = true;
-                    megaBufferGeo.computeVertexNormals();
 
-                    
-
-                    // megaMesh.updateMatrixWorld();
-                    
-                     
-
-                      //Can we INSTANCE mesh at this step
-                      //You maybe making a drawcall everytime here..., i think instance mesh makes 1 initial drawcall
-                      //TODO IGNORE INSTANCE MESHING. Continue with megamesh logic...pass buffer geometry through it,
-                      //with correct matrix
-                      //DONT DO INSTANCE MESH
-                     
-              } }, 100);
+               }, 100);
               console.log(megaMesh);
 
             explosionApp.position.fromArray(result.point);
@@ -347,7 +323,6 @@ export default () => {
                 upVector
               )
             );
-            // explosionApp.scale.copy(gunApp.scale);
             explosionApp.updateMatrixWorld();
             explosionApp.setComponent('color1', 0xef5350);
             explosionApp.setComponent('color2', 0x000000);
