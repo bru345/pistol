@@ -273,6 +273,10 @@ export default () => {
                         ));
 
                         if (debugDecalVertPos) {
+
+                          // represents where the vertex should wrap to
+                          // indicates that the wrapping values are correct...
+                          // Yet decal has stopped wrapping...
                           debugMesh[i].position.set(pointVec.x, pointVec.y, pointVec.z);
                           debugMesh[i].updateWorldMatrix();
                         }
@@ -298,18 +302,19 @@ export default () => {
                         megaFloatArray[megaIndex  + 2] = worldToLoc.z;
                       }
                   }
-                  // removing the white plane after using it for positonal reasons..
+                  // removing the white plane after using it for positonal
                   scene.remove(plane);
 
                   // Where we update the postiion and 
                     const megaGeoSize = setArray.length;
+
+                    // After this step, we SHOULD be seeing another decale duplicate or form...?
+                    // Might be just copying over the same spot?  
+                    // Have not taken UVs into account..
                     megaBufferGeo.attributes.position.array = megaFloatArray;
 
 
                     // Redundant? we're already passing the megaFloatArray
-                    // After this step, we SHOULD be seeing another decale duplicate or form...?
-                    // Might be just copying over the same spot?  
-                    // Have not taken UVs into account..
                     for (let i = startIndex; i < megaGeoSize - 1; i++) {
                         console.log(setArray[i], i);
                         megaBufferGeo.attributes.position.setXYZ( i, setArray[i].x, setArray[i].y, setArray[i].z);
